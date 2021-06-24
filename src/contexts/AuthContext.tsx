@@ -3,7 +3,7 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 import { auth, firebase } from "../services/firebase";
 
 type User = {
-    uid: string;
+    id: string;
     name: string;
     avatar: string;
 }
@@ -32,7 +32,7 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
                 }
 
                 setUser({
-                    uid,
+                    id: uid,
                     name: displayName,
                     avatar: photoURL
                 });
@@ -57,7 +57,7 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
             }
 
             setUser({
-                uid,
+                id: uid,
                 name: displayName,
                 avatar: photoURL
             });
