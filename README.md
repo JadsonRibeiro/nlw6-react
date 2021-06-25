@@ -1,46 +1,30 @@
-# Getting Started with Create React App
+<h1 align="center">
+  <img alt="Let me ask" title="LetMeAsk" src=".github/logo.svg" />
+</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br>
 
-## Available Scripts
+<p align="center">
+  <img alt="Letmeask" src=".github/let-me-ask.png" width="100%">
+</p>
 
-In the project directory, you can run:
+## ✨ Tecnologias
 
-### `yarn start`
+Esse projeto foi desenvolvido com as seguintes tecnologias:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [React](https://reactjs.org)
+- [Firebase](https://firebase.google.com/)
+- [TypeScript](https://www.typescriptlang.org/)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 💻 Projeto
 
-### `yarn test`
+O LetMeAsk é um projeto utilizado para produtores de conteúdos que querem facilitar a forma que seu público os faz perguntas. Nele você pode criar uma sala sobre um tema específo, compartilhar seu ID e por meio dela, seus usuários poderão fazer perguntas sobre o tema e o dono da sala poderá gerenciar as perguntas feitas.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🚀 Como executar
 
-### `yarn build`
+- Clone o repositório
+- Instale as dependências com `yarn`
+- Adicionar as variáveis de ambiente no arquivo .env
+- Inicie o servidor com `yarn start`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Agora você pode acessar [`localhost:3000`](http://localhost:3000) do seu navegador.
