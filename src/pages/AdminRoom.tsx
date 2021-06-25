@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
-import logoImg from "../assets/images/logo.svg";
 import removeImg from "../assets/images/delete.svg"
 import checkImage from "../assets/images/check.svg"
 import answerImg from "../assets/images/answer.svg"
@@ -11,6 +10,7 @@ import { Question } from "../components/Question";
 import { RoomCode } from "../components/RoomCode";
 import { useRoom } from "../hooks/useRoom";
 import { AnswerQuestionModal } from "../components/AnswerQuestionModal";
+import { Header } from "../components/Header";
 
 import { database } from "../services/firebase";
 
@@ -63,21 +63,10 @@ export function AdminRoom() {
 
     return (
         <div id="page-room">
-            <header>
-                <div className="content">
-                    <Link to="/">
-                        <img 
-                            src={logoImg} 
-                            alt="Ilustração sobre perguntas e repostas" 
-                            className="logo"
-                        />
-                    </Link>
-                    <div>
-                        <RoomCode code={roomID} />
-                        <Button isOutlined onClick={handleEndRoom}>Encerrar sala</Button>
-                    </div>
-                </div>
-            </header>
+            <Header>
+                <RoomCode code={roomID} />
+                <Button isOutlined onClick={handleEndRoom}>Encerrar sala</Button>
+            </Header>
 
             <main className="content">
                 <div className="room-title">

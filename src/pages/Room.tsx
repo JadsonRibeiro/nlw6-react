@@ -1,9 +1,8 @@
-import { FormEvent, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-
-import logoImg from "../assets/images/logo.svg";
+import { FormEvent, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import { Button } from "../components/Button";
+import { Header } from "../components/Header";
 import { Question } from "../components/Question";
 import { RoomCode } from "../components/RoomCode";
 import { useAuth } from "../hooks/useAuth";
@@ -63,20 +62,11 @@ export function Room() {
 
     return (
         <div id="page-room">
-            <header>
-                <div className="content">
-                    <Link to="/">
-                        <img 
-                            src={logoImg} 
-                            alt="Ilustração sobre perguntas e repostas" 
-                            className="logo"
-                        />
-                    </Link>
-                    <RoomCode code={roomID} />
-                </div>
-            </header>
+            <Header>
+                <RoomCode code={roomID} />
+            </Header>
 
-            <main className="content">
+            <main>
                 <div className="room-title">
                     <h1>{title}</h1>
                     { questions.length > 0 && <span>{questions.length} pergunta(s) </span>}

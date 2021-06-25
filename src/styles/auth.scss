@@ -92,6 +92,7 @@
 
     .create-room {
         margin-top: 64px;
+        padding: 0 6px;
         height: 50px;
         border-radius: 8px;
         font-weight: 500;
@@ -138,6 +139,14 @@
             height: 1px;
             background-color: #a8a8b3;
             margin-left: 16px;
+        }
+    }
+}
+
+@media (max-width: 790px) {
+    #page-auth {
+        aside {
+            display: none;
         }
     }
 }
