@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import logoImg from "../assets/images/logo.svg";
 
@@ -44,10 +44,11 @@ export function Room() {
                 avatar: user.avatar
             },
             isHighlighted: false,
-            isAnswered: false
+            answer: ''
         }
 
         await database.ref(`/rooms/${roomID}/questions`).push(question);
+        setNewQuestion("");
     }
 
     async function handleLikeQuestion(questionID: string, likeId: string | undefined) {
@@ -64,7 +65,13 @@ export function Room() {
         <div id="page-room">
             <header>
                 <div className="content">
-                    <img src={logoImg} alt="Letmeask" />
+                    <Link to="/">
+                        <img 
+                            src={logoImg} 
+                            alt="Ilustração sobre perguntas e repostas" 
+                            className="logo"
+                        />
+                    </Link>
                     <RoomCode code={roomID} />
                 </div>
             </header>
@@ -72,7 +79,7 @@ export function Room() {
             <main className="content">
                 <div className="room-title">
                     <h1>{title}</h1>
-                    { questions.length && <span>{questions.length} pergunta(s) </span>}
+                    { questions.length > 0 && <span>{questions.length} pergunta(s) </span>}
                 </div>
 
                 <form onSubmit={handleCreateNewQuestion}>
@@ -100,10 +107,10 @@ export function Room() {
                             key={question.id}
                             content={question.content}
                             author={question.author}
-                            isAnswered={question.isAnswered}
+                            answer={question.answer}
                             isHighlighted={question.isHighlighted}
                         >
-                            {!question.isAnswered && (
+                            {!question.answer && (
                                 <button 
                                     className={`like-button ${question.likeId ? 'liked' : ''}`}
                                     type="button"

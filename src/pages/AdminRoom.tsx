@@ -1,4 +1,5 @@
-import { useHistory, useParams } from "react-router-dom";
+import { useState } from "react";
+import { Link, useHistory, useParams } from "react-router-dom";
 
 import logoImg from "../assets/images/logo.svg";
 import removeImg from "../assets/images/delete.svg"
@@ -9,6 +10,7 @@ import { Button } from "../components/Button";
 import { Question } from "../components/Question";
 import { RoomCode } from "../components/RoomCode";
 import { useRoom } from "../hooks/useRoom";
+import { AnswerQuestionModal } from "../components/AnswerQuestionModal";
 
 import { database } from "../services/firebase";
 
@@ -19,18 +21,26 @@ type RoomParams = {
 }
 
 export function AdminRoom() {
+    const [questionIDModalOpened, setQuestionIDModalOpened] = useState('');
+
     const history = useHistory();
     const params = useParams<RoomParams>();
     const roomID = params.id;
 
     const { title, questions } = useRoom(roomID);
 
-    async function handleCheckQuestionAsAnswered(questionID: string) {
-        await database.ref(`rooms/${roomID}/questions/${questionID}`).update({
-            isAnswered: true
-        });
+    async function handleAnswerQuestion(questionID: string) {
+        setQuestionIDModalOpened(questionID);
     }
-    
+
+    async function handleQuestionSubmited(roomID: string, questionID: string, answer: string) {
+        await database.ref(`rooms/${roomID}/questions/${questionID}`).update({
+            answer
+        });
+
+        setQuestionIDModalOpened("");
+    }
+
     async function handleHighlightQuestion(questionID: string) {
         await database.ref(`rooms/${roomID}/questions/${questionID}`).update({
             isHighlighted: true
@@ -55,7 +65,13 @@ export function AdminRoom() {
         <div id="page-room">
             <header>
                 <div className="content">
-                    <img src={logoImg} alt="Letmeask" />
+                    <Link to="/">
+                        <img 
+                            src={logoImg} 
+                            alt="Ilustração sobre perguntas e repostas" 
+                            className="logo"
+                        />
+                    </Link>
                     <div>
                         <RoomCode code={roomID} />
                         <Button isOutlined onClick={handleEndRoom}>Encerrar sala</Button>
@@ -66,7 +82,7 @@ export function AdminRoom() {
             <main className="content">
                 <div className="room-title">
                     <h1>{title}</h1>
-                    { questions.length && <span>{questions.length} pergunta(s) </span>}
+                    { questions.length > 0 && <span>{questions.length} pergunta(s) </span>}
                 </div>
 
                 <div className="questions-list">
@@ -75,28 +91,26 @@ export function AdminRoom() {
                             key={question.id}
                             content={question.content}
                             author={question.author}
-                            isAnswered={question.isAnswered}
+                            answer={question.answer}
                             isHighlighted={question.isHighlighted}
                         >
-                            {!question.isAnswered && (
-                                <>
-                                    <button 
-                                        className="like-button"
-                                        type="button"
-                                        aria-label="Marcar como respondida"
-                                        onClick={() => handleCheckQuestionAsAnswered(question.id)}
-                                    >
-                                        <img src={checkImage} alt="Marcar pergunta como respondida" />
-                                    </button>
-                                    <button 
-                                        className="like-button"
-                                        type="button"
-                                        aria-label="Dar destaque"
-                                        onClick={() => handleHighlightQuestion(question.id)}
-                                    >
-                                        <img src={answerImg} alt="Dar destaque à pergunta" />
-                                    </button>
-                                </>
+                            <button 
+                                className="like-button"
+                                type="button"
+                                aria-label="Responder pergunta"
+                                onClick={() => handleAnswerQuestion(question.id)}
+                            >
+                                <img src={answerImg} alt="Responder pergunta" />
+                            </button>
+                            {!question.answer && (
+                                <button 
+                                    className="like-button"
+                                    type="button"
+                                    aria-label="Dar destaque"
+                                    onClick={() => handleHighlightQuestion(question.id)}
+                                >
+                                    <img src={checkImage} alt="Dar destaque à pergunta" />
+                                </button>
                             )}
                             <button 
                                 className="like-button"
@@ -106,6 +120,14 @@ export function AdminRoom() {
                             >
                                 <img src={removeImg} alt="Remover pergunta" />
                             </button>
+                            <AnswerQuestionModal
+                                answer={question.answer}
+                                questionID={question.id}
+                                roomID={roomID}
+                                isOpen={question.id === questionIDModalOpened}
+                                onQuestionAnswerd={handleQuestionSubmited}
+                                onRequestClose={() => setQuestionIDModalOpened('')}
+                            />
                         </Question>
                     ))}
                 </div>

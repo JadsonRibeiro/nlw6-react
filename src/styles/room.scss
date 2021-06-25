@@ -10,7 +10,7 @@
             justify-content: space-between;
             align-items: center;
     
-            > img {
+            img.logo {
                 max-height: 45px;
             }
 
@@ -108,5 +108,5 @@
         .questions-list {
             margin-top: 32px;
         }
-    } 
+    }
 }

@@ -9,18 +9,18 @@ type QuestionProps = {
     }
     children: ReactNode,
     isHighlighted?: boolean;
-    isAnswered?: boolean;
+    answer: string;
 }
 
 export function Question({ 
     content, 
     author, 
     children,
-    isAnswered = false,
+    answer,
     isHighlighted = false 
 }: QuestionProps) {
     return (
-        <div className={ `question ${isAnswered ? 'answered' : ''} ${isHighlighted ? 'highlighted' : '' }`}>
+        <div className={ `question ${answer ? 'answered' : ''} ${isHighlighted ? 'highlighted' : '' }`}>
             <p>{content}</p>
             <footer>
                 <div className="user-info">
@@ -31,6 +31,11 @@ export function Question({
                     {children}
                 </div>
             </footer>
+            {answer && (
+                <div className="answer">
+                    <strong>Resposta: </strong><span>{answer}</span>
+                </div>
+            )}
         </div>
     )
 }
