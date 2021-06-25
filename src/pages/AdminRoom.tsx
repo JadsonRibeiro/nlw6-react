@@ -2,11 +2,12 @@ import { useHistory, useParams } from "react-router-dom";
 
 import logoImg from "../assets/images/logo.svg";
 import removeImg from "../assets/images/delete.svg"
+import checkImage from "../assets/images/check.svg"
+import answerImg from "../assets/images/answer.svg"
 
 import { Button } from "../components/Button";
 import { Question } from "../components/Question";
 import { RoomCode } from "../components/RoomCode";
-import { useAuth } from "../hooks/useAuth";
 import { useRoom } from "../hooks/useRoom";
 
 import { database } from "../services/firebase";
@@ -23,6 +24,18 @@ export function AdminRoom() {
     const roomID = params.id;
 
     const { title, questions } = useRoom(roomID);
+
+    async function handleCheckQuestionAsAnswered(questionID: string) {
+        await database.ref(`rooms/${roomID}/questions/${questionID}`).update({
+            isAnswered: true
+        });
+    }
+    
+    async function handleHighlightQuestion(questionID: string) {
+        await database.ref(`rooms/${roomID}/questions/${questionID}`).update({
+            isHighlighted: true
+        });
+    }
 
     async function handleEndRoom() {
         await database.ref(`rooms/${roomID}`).update({
@@ -62,7 +75,29 @@ export function AdminRoom() {
                             key={question.id}
                             content={question.content}
                             author={question.author}
+                            isAnswered={question.isAnswered}
+                            isHighlighted={question.isHighlighted}
                         >
+                            {!question.isAnswered && (
+                                <>
+                                    <button 
+                                        className="like-button"
+                                        type="button"
+                                        aria-label="Marcar como respondida"
+                                        onClick={() => handleCheckQuestionAsAnswered(question.id)}
+                                    >
+                                        <img src={checkImage} alt="Marcar pergunta como respondida" />
+                                    </button>
+                                    <button 
+                                        className="like-button"
+                                        type="button"
+                                        aria-label="Dar destaque"
+                                        onClick={() => handleHighlightQuestion(question.id)}
+                                    >
+                                        <img src={answerImg} alt="Dar destaque à pergunta" />
+                                    </button>
+                                </>
+                            )}
                             <button 
                                 className="like-button"
                                 type="button"
